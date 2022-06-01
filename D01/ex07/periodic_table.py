@@ -1,4 +1,3 @@
-from re import L
 import sys
 
 def init_html(fd):
@@ -8,7 +7,7 @@ def init_html(fd):
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-		<h1>Table</h1>
+		<h1>Periodic Table</h1>
 		<table>
 """)
 

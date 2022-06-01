@@ -23,7 +23,10 @@ def var_to_dict() :
 		]
 	res = dict()
 	for elem in d:
-		res[elem[1]] = elem[0]
+		if elem[1] in res.keys():
+			res[elem[1]] += ' ' + elem[0]
+		else:
+			res[elem[1]] = elem[0]
 	for x, y in res.items():
 		print(x + ' : ' + y)
 
