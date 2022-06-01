@@ -45,12 +45,12 @@ def all_in(lst):
 			continue
 		if is_state(i, states) != "Unknown":
 			name = is_state(i, states)
-			print(capital_cities[states[name]] + " is the capital of " + name)
+			print(capital_cities[states[name]] + " is the capital of " + name, end="\n\r")
 		elif is_capital(i, capital_cities) != "Unknown":
 			name = is_capital(i, capital_cities)
-			print(name + " is the capital of " + getKey(getKey(name, capital_cities), states))
+			print(name + " is the capital of " + getKey(getKey(name, capital_cities), states), end="\n\r")
 		else:
-			print(i + " is neither a capital nor a state")
+			print(i + " is neither a capital nor a state", end="\n\r")
 
 if __name__ == "__main__":
 	if (len(sys.argv) != 2):

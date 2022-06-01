@@ -2,9 +2,11 @@ import sys
 
 def init_html(fd):
 	fd.write("""<!doctype html>
-<html>
+<html lang="en">
 	<head>
+		<title>Periodic Table</title>
 		<link rel="stylesheet" href="periodic_table.css">
+		<meta charset="utf-8"/>
 	</head>
 	<body>
 		<h1>Periodic Table</h1>
@@ -35,8 +37,7 @@ li {
 """)
 
 def close_html(fd):
-	fd.write("""				</td>
-			</tr>
+	fd.write("""			</tr>
 		</table>
 	</body>
 </html>
