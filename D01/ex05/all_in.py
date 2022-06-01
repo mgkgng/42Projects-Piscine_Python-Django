@@ -15,14 +15,14 @@ def getKey(v, d) :
 def is_state(name, d) :
 	for elem in d.keys():
 		if name.lower() == elem.lower():
-			return True
-	return False
+			return elem
+	return "Unknown"
 
 def is_capital(name, d) :
 	for elem in d.values():
 		if name.lower() == elem.lower():
-			return True
-	return False
+			return elem
+	return "Unknown"
 
 def all_in(lst):
 	states = {
@@ -43,14 +43,16 @@ def all_in(lst):
 	for i in lst:
 		if len(i) == 0:
 			continue
-		if is_state(i, states):
-			print(capital_cities[states[i]] + " is the capital of " + i)
-		elif is_capital(i, capital_cities):
-			print(i + " is the capital of " + getKey(getKey(i, capital_cities), states))
+		if is_state(i, states) != "Unknown":
+			name = is_state(i, states)
+			print(capital_cities[states[name]] + " is the capital of " + name)
+		elif is_capital(i, capital_cities) != "Unknown":
+			name = is_capital(i, capital_cities)
+			print(name + " is the capital of " + getKey(getKey(name, capital_cities), states))
 		else:
 			print(i + " is neither a capital nor a state")
 
 if __name__ == "__main__":
 	if (len(sys.argv) != 2):
-		exit(0)  
+		exit(0) 
 	all_in(parse(sys.argv[1].split(",")))
