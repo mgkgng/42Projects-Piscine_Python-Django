@@ -45,10 +45,10 @@ def close_html(fd):
 
 def writeInfo(fd, info):
 	fd.write("\t\t\t\t\t<ul>\n")
+	fd.write("\t\t\t\t\t\t<li>No " + info["number"] + "</li>\n")
 	fd.write("\t\t\t\t\t\t<li>" + info["small"]+ "</li>\n")
 	fd.write("\t\t\t\t\t\t<li>" + info["molar"]+ "</li>\n")
-	fd.write("\t\t\t\t\t\t<li>" + info["electron"] +"</li>\n")
-	fd.write("\t\t\t\t\t\t<li>" + info["number"] + "</li>\n")
+	fd.write("\t\t\t\t\t\t<li>" + info["electron"] +" electron</li>\n")
 	fd.write("\t\t\t\t\t</ul>\n")
 
 def writeInfoCell(fd, name, info):
