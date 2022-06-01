@@ -19,6 +19,5 @@ def my_var() :
 	print(h, "has a type", type(h))
 	print(i, "has a type", type(i))
 
-
 if __name__ == '__main__' :
 	my_var()
