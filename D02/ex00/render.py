@@ -4,9 +4,13 @@ import settings
 
 def checkError(argv):
 	if len(argv) != 2:
+		print("Error: Too many arguments")
 		exit(0)
 	if sys.argv[1][-9:] != ".template" or len(argv[1]) < 10:
-		print("coucou")
+		print("Error: wrong file name")
+		exit(0)
+	if not os.path.isfile(sys.argv[1]):
+		print("Error: File not found")
 		exit(0)
 
 def getValues():
@@ -41,5 +45,5 @@ def	render(file):
 	dest.close()
 
 if __name__ == "__main__":
-	#checkError(sys.argv)
+	checkError(sys.argv)
 	render(sys.argv[1])
