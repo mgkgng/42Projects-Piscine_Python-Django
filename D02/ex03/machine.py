@@ -1,4 +1,5 @@
 import random
+from beverage import HotBeverage, Cappuccino
 
 class CoffeeMachine():
 	served = 0
