@@ -2,11 +2,11 @@ import random
 from beverage import HotBeverage, Cappuccino, Tea, Coffee, Chocolate
 
 class CoffeeMachine():
-	served = 0
-	broken = False
 
 	def __init__(self):
-		pass
+		self.served = 0
+		self.broken = False
+
 	
 	class EmptyCup(HotBeverage):
 		price = 0.90
@@ -29,7 +29,7 @@ class CoffeeMachine():
 	
 	class BrokenMachineException(Exception):
 		def __init__(self):
-			super().__init__(self, "This coffee machine has to be repaired.")
+			Exception.__init__(self, "This coffee machine has to be repaired.")
 
 if __name__ == "__main__":
 	machine = CoffeeMachine()
@@ -45,7 +45,13 @@ if __name__ == "__main__":
 	except machine.BrokenMachineException as e:
 		print(e)
 	machine.repair()
-	print(f"=======12time=======")
-	print(str(machine.serve(Chocolate)))
+	for i in range (12, 22):
+		print(f"======={i}time=======")
+		print(str(machine.serve(Chocolate)))
+	print(f"=======23time=======")
+	try:
+		print(str(machine.serve(Coffee)))
+	except machine.BrokenMachineException as e:
+		print(e)
 
 	

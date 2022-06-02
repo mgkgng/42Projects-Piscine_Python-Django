@@ -6,7 +6,7 @@ class HotBeverage:
 		return "Just some hot water in a cup."
 	
 	def __str__(self):
-		return "name : " +  self.name + "\n" + "price : " +  str(self.price) + "\n" + "description : " + self.description() + "\n"
+		return "name : " +  self.name + "\n" + "price : " +  f"{self.price:.2f}" + "\n" + "description : " + self.description() + "\n"
 
 class Coffee(HotBeverage):
 	price = 0.40

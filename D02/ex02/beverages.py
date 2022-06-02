@@ -2,29 +2,37 @@ class HotBeverage:
 	price = 0.30
 	name = "hot beverage"
 
+	def __init__(self):
+		pass
+
 	def description(self):
 		return "Just some hot water in a cup."
 	
 	def __str__(self):
-		return "name : " +  self.name + "\n" + "price : " +  str(self.price) + "\n" + "description : " + self.description() + "\n"
+		return "name : " +  self.name + "\n" + "price : " +  f"{self.price:.2f}" + "\n" + "description : " + self.description() + "\n"
 
 class Coffee(HotBeverage):
 	price = 0.40
 	name = "coffee"
 
+	def __init__(self):
+		pass
+
 	def description(self):
 		return "A coffee, to stay awake."
 
 class Tea(HotBeverage):
-	price = 0.30
 	name = "tea"
-
-	def description(self):
-		return "Just some hot water in a cup."
+	
+	def __init__(self):
+		pass
 
 class Chocolate(HotBeverage):
 	price = 0.50
 	name = "chocolate"
+
+	def __init__(self):
+		pass
 
 	def description(self):
 		return "Chocolate, sweet chocolate..."
@@ -32,6 +40,9 @@ class Chocolate(HotBeverage):
 class Cappuccino(HotBeverage):
 	price = 0.45
 	name = "cappuccino"
+
+	def __init__(self):
+		pass
 
 	def description(self):
 		return "Un po' di Italia nella sua tazza!"

@@ -6,7 +6,9 @@ from re import L
 
 class Text(str):
      def __str__(self):
-        return super().__str__().replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace('\n', '\n<br />\n')
+        if str == '"':
+            return super().__str__().replace('"', "&quot;")
+        return super().__str__().replace('<', '&lt;').replace('>', '&gt;').replace('\n', '\n<br />\n')
 
 class Elem:
     def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
@@ -78,3 +80,6 @@ class Elem:
     class ValidationError(Exception):
         def __init__(self):
             super().__init__(self, "Validation error")
+
+if __name__ == "__main__":
+    print(Elem("html", {}, [Elem("head", {}, Elem("title", {}, Text('"Hello ground!"'), "double"), "double"), Elem("body", {}, [Elem("h1", {}, Text('"Oh no, not again!"'), "double"), Elem("img", {"src": "http://i.imgur.com/pfp37.jpg"}, None, "simple")], "double")], "double"))
