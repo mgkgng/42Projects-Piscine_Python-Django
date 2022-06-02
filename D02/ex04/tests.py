@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-# coding: utf-8
+#!/usr/local/bin/python3
+#coding: utf-8
 
 import traceback
 from elem import Elem, Text

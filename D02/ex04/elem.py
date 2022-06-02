@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 
 
 from re import L
@@ -6,9 +6,11 @@ from re import L
 
 class Text(str):
      def __str__(self):
-        if str == '"':
-            return super().__str__().replace('"', "&quot;")
-        return super().__str__().replace('<', '&lt;').replace('>', '&gt;').replace('\n', '\n<br />\n')
+        return super().__str__().replace(
+                '<', '&lt;').replace(
+                '>', '&gt;').replace(
+                '"', "&quot;").replace("\&quot;", '"').replace(
+                '\n', '\n<br />\n')
 
 class Elem:
     def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
@@ -82,4 +84,4 @@ class Elem:
             super().__init__(self, "Validation error")
 
 if __name__ == "__main__":
-    print(Elem("html", {}, [Elem("head", {}, Elem("title", {}, Text('"Hello ground!"'), "double"), "double"), Elem("body", {}, [Elem("h1", {}, Text('"Oh no, not again!"'), "double"), Elem("img", {"src": "http://i.imgur.com/pfp37.jpg"}, None, "simple")], "double")], "double"))
+    print(Elem("html", {}, [Elem("head", {}, Elem("title", {}, Text('\\"Hello ground!\\"'), "double"), "double"), Elem("body", {}, [Elem("h1", {}, Text('\\"Oh no, not again!\\"'), "double"), Elem("img", {"src": "http://i.imgur.com/pfp37.jpg"}, None, "simple")], "double")], "double"))
