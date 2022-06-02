@@ -7,6 +7,8 @@ class Text(str):
 
 class Elem:
     def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
+        if content != None and not Elem.check_type(content):
+            raise Elem.ValidationError
         self.tag = tag
         self.attr = attr
         self.content = content
@@ -71,6 +73,9 @@ class Elem:
                                                 isinstance(elem, Elem)
                                                 for elem in content])))
 
+    class ValidationError(Exception):
+        def __init__(self):
+            super().__init__(self, "Validation error")
 
 if __name__ == '__main__':
     [...]
