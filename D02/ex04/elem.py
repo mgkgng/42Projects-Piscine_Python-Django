@@ -2,12 +2,8 @@
 
 
 class Text(str):
-    def __init__(self, s = ''):
-        super(s)
-
-    def __str__(self):
-        return super().__str__().replace('\n', '\n<br />\n')
-
+     def __str__(self):
+        return super().__str__().replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace('\n', '\n<br />\n')
 
 class Elem:
     def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
@@ -17,40 +13,43 @@ class Elem:
         self.tag_type = tag_type
 
     def __str__(self):
-
-        content = "\n  {0}\n".format(self.content)
-
-        #result += content
-
-
-
-
         if self.tag_type == 'double':
-            result = "<{0}>{1}</{0}>".format(str(self.tag), content)
-
+            result = f"<{str(self.tag)}{self.__make_attr()}>{self.__make_content()}</{str(self.tag)}>"
         elif self.tag_type == 'simple':
-            result = "<{0} {1}/>".format(str(self.tag), )
+            result = "<{0} {1}/>".format(str(self.tag), self.__make_attr())
+       # print("-------" + result)
         return result
 
     def __make_attr(self):
-        """
-        Here is a function to render our elements attributes.
-        """
         result = ''
         for pair in sorted(self.attr.items()):
             result += ' ' + str(pair[0]) + '="' + str(pair[1]) + '"'
         return result
 
     def __make_content(self):
-        """
-        Here is a method to render the content, including embedded elements.
-        """
-
-        if len(self.content) == 0:
+        if self.content is None:
             return ''
+        if isinstance(self.content, Elem) == False and len(self.content) == 0:
+            return ''
+        if isinstance(self.content, Elem) or len(self.content) == 1:
+            self.content = [self.content]
+
         result = '\n'
+        #print(self.content)
         for elem in self.content:
-            result += [...]
+            if elem is None:
+                pass
+            elif isinstance(elem, str) and len(elem) == 0:
+                pass
+            elif isinstance(elem, Elem):
+                before = elem.__str__().split('\n')
+                for line in before:
+                    result += f"  {line}\n"
+            else:
+                result += f"  {elem}\n"
+        if result == '\n':
+            result = ""
+        #print("========" + result)
         return result
 
     def add_content(self, content):
