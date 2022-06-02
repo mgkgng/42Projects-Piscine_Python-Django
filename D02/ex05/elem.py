@@ -1,9 +1,5 @@
 #!/usr/local/bin/python3
 
-
-from re import L
-
-
 class Text(str):
      def __str__(self):
         return super().__str__().replace(

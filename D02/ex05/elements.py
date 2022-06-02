@@ -81,4 +81,4 @@ class Br(Elem):
 		super().__init__("br", content, None, "simple")
 
 if __name__ == "__main__":
-	print(Html([Head(Title(Text("Hello ground!"))), Body([H1(Text("Oh no, not again!")), Img({Text("src"): Text("http://i.imgur.com/pfp3T.jpg")})])]))
+	print(Html([Head(Title(Text('\\"Hello ground!\\"'))), Body([H1(Text('\\"Oh no, not again!\\"')), Img({Text("src"): Text("http://i.imgur.com/pfp3T.jpg")})])]))
