@@ -1,4 +1,4 @@
-import sys
+import sys, os, re
 
 def checkError(argv):
 	if len(argv) != 3:

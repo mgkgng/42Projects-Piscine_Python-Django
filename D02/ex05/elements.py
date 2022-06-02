@@ -1,62 +1,84 @@
-from elem import Elem
+from elem import Text, Elem
 
 class Html(Elem):
-	def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
-        self.tag = tag
-        self.attr = attr
-        self.content = content
-        self.tag_type = tag_type
+	def __init__(self, content=None):
+		super().__init__("html", {}, content, "double")
 
 class Head(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("head", {}, content, "double")
 
 class Body(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("body", {}, content, "double")
+
+class Title(Elem):
+	def __init__(self, content=None):
+		super().__init__("title", {}, content, "double")
 
 class Meta(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("meta", content, None, "simple")
 
 class Img(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("img", content, None, "simple")
 
 class Table(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("table", {}, content, "double")
 
 class Th(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("th", {}, content, "double")
 
 class Tr(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("tr", {}, content, "double")
 
 class Td(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("td", {}, content, "double")
 
 class Ul(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("ul", {}, content, "double")
 
 class Ol(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("ol", {}, content, "double")
 
 class Li(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("li", {}, content, "double")
 
 class H1(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("h1", {}, content, "double")
 
 class H2(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("h2", {}, content, "double")
 
 class P(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("p", {}, content, "double")
 
 class Div(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("div", {}, content, "double")
 
 class Span(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("span", {}, content, "double")
 
 class Hr(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("hr", content, None, "simple")
 
 class Br(Elem):
-	pass
+	def __init__(self, content=None):
+		super().__init__("br", content, None, "simple")
+
+if __name__ == "__main__":
+	print(Html([Head(Title(Text("Hello ground!"))), Body([H1(Text("Oh no, not again!")), Img({Text("src"): Text("http://i.imgur.com/pfp3T.jpg")})])]))
