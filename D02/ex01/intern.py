@@ -1,19 +1,34 @@
 class Intern :
-	def __init__(self, name = "My name? I’m nobody, an intern, I have no name.")
+	def __init__(self, name = "My name? I’m nobody, an intern, I have no name."):
 		self.Name = name
 
 	def	__str__(self):
-		pass
+		return self.Name
 
 	class Coffee:
-		def __str__(self):
+		def __init__(self):
 			pass
+
+		def __str__(self):
+			return "This is the worst coffee you ever tasted."
 
 	def	work(self):
 		raise Exception("I’m just an intern, I can’t do that...")
 	
 	def make_coffee(self):
-		return Intern.Coffee()
+		return self.Coffee()
 
 if __name__ == "__main__":
+	unknown = Intern()
 	mark = Intern("Mark")
+	print("=======their name========")
+	print(str(unknown))
+	print(str(mark))
+	print("======Bring me a coffee====")
+	coffee = mark.make_coffee()
+	print(str(coffee))
+	print("=======Go to work=========")
+	try:
+		print(mark.work())
+	except Exception as e:
+		print(e)
