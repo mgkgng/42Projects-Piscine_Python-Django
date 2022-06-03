@@ -24,15 +24,24 @@ def request_wiki(filename):
 
 	R = S.get(url=URL, params=PARAMS)
 	DATA = R.json()
+	#print(json.dumps(DATA, sort_keys=True, indent=4))
+	#if missing == True
+		#return "Couldn't find " + filename + " on Wikipedia!"
 
 	PAGES = DATA["query"]["pages"]
 	#print(json.dumps(PAGES, sort_keys=True, indent=4))
-	return dewiki.from_string(PAGES[0]["revisions"][0]["slots"]["main"]["content"])
+	
+	res = PAGES[0]["revisions"][0]["slots"]["main"]["content"]
+	test = dewiki.from_string(res)
+	
+	print(test)
+	return res
 
 def	write_file(filename, str):
 	fileW = open(filename + ".wiki", 'w')
 	fileW.write(str)
 	fileW.close()
+
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
