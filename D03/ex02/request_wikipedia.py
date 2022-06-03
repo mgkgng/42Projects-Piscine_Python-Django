@@ -1,5 +1,4 @@
-import requests, sys, json
-import dewiki
+import requests, sys, json, dewiki
 
 
 def check_strErr(str):
@@ -34,8 +33,7 @@ def request_wiki(filename):
 	res = PAGES[0]["revisions"][0]["slots"]["main"]["content"]
 	test = dewiki.from_string(res)
 	
-	print(test)
-	return res
+	return test
 
 def	write_file(filename, str):
 	fileW = open(filename + ".wiki", 'w')
