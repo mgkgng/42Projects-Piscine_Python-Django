@@ -1,0 +1,18 @@
+{% extends "ex01/base.html" %}
+
+{% block title %}
+<title>Ex01: Display process of a static page.</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/ex01/style1.css">
+{% endblock %}
+
+{% block content%}
+<ol>
+	<li>The server receives the request from the client.</li>
+	<li>It goes into view.py file, then it finds out that it is a GET request from the client</li>
+	<li>It chekcs the route, then it sends back to the client the right HTML file which is in the templates</li>
+	<li>Then the client will get the static web page, and be able to see it on their navigator!</li>
+</ol>
+{% endblock %}
