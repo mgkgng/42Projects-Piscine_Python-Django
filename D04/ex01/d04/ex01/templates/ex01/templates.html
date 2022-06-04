@@ -5,18 +5,19 @@
 {% endblock %}
 
 {% block style %}
-
+<link rel="stylesheet" type="text/css" href="/static/css/style2.css">
 {% endblock %}
 
 {% block content%}
-	<ul>
-		<li>Blocks</li>
-		<p>use {% block content_name %} ...contentblock... {% endblock %} syntax in order to use blocks!</p><br>
-		<li>Loops for ... in</li>
-		<p>use {% for element in iterable %} ...codeblock... {% endfor %} syntax in order to use for loops!<</p><br>
-		<li>if control structures</li>
-		<p>use {% if condition %} ... {% endif %} syntax in order to if control structures!<</p><br>
-		<li>The display of the passing context variables</li>
-		<p>use dictionnary {'key' : 'value', ...} as the third parameter of render function as you want to get the response from the server!</p><br>
-	</ul>
+<h2>Template engine.</h2>
+<ul>
+	<li>Blocks</li>
+	<p>use {% block content_name %} ...contentblock... {% endblock %} syntax in order to use blocks!</p><br>
+	<li>Loops for ... in</li>
+	<p>use {% for element in iterable %} ...codeblock... {% endfor %} syntax in order to use for loops!</p><br>
+	<li>if control structures</li>
+	<p>use {% if condition %} ... {% endif %} syntax in order to if control structures!</p><br>
+	<li>The display of the passing context variables</li>
+	<p>use dictionnary {'key' : 'value', ...} as the third parameter of render function as you want to get the response from the server!</p><br>
+</ul>
 {% endblock %}
