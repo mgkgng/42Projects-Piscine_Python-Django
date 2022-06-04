@@ -1,18 +1,16 @@
 from django.shortcuts import render, HttpResponse
 from django.utils import timezone
-from forms import Info
+from . import forms
+from .forms import Info
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("info")
+
 
 def index(request):
 	if request.method == "POST":
 		form = Info(request.POST)
-
 		if form.is_valid():
-			logger.
-
-		else:
-			form = Info()
-	return render(request, "base.html", {"log", list(i.split(' ') for i in logfile.split('\n'))})
-
+			logger.info(form.cleaned_data["firstName"])
+	form = Info()
+	return render(request, "ex02/base.html", {"form": form})

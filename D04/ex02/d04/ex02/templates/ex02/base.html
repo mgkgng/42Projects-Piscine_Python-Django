@@ -13,22 +13,13 @@
 	<body>
 		<form method="POST">
 			{% csrf_token %}
-			<label for="firstName">First Name: </label>
-			<input type="text" name="firstName"><br>
-			<label for="lastName">Last Name: </label>
-			<input type="text" name="lastName"><br>	
+			{{form}}
 			<input type="submit" name="submit">
 		</form>
 		<h2>Input History</h2>
-		<table>
-			<tr>
-				<th>Time</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-			</tr>
-			{% block history %}
-			{% include "ex02/history.html" %}
-			{% endblock %}
+		{% block history %}
+		{% include "logs.log" %}
+		{% endblock %}
 		</table>
 	</body>
 </html>

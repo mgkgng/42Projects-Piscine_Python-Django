@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from msilib.schema import tables
 from pathlib import Path
 import os
 
@@ -59,7 +58,7 @@ ROOT_URLCONF = 'd04.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["ex02/log"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,14 +132,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s %(message)s<br>'
+        }
+    },
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+        'info': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / "ex02/log/logs.log",
+            'formatter': 'standard'
         },
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'WARNING',
+    'loggers': {
+        'info': {
+            'handlers': ['info'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
     },
 }
