@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+	<head>
+		<title>D04:EX03</title>
+	</head>
+	<body>
+		<table>
+			{% for i in "ddddd" %}
+			{% for elem in colors%}
+			{% for colorlist in elem %}
+			{% for r, g, b in colorlist}
+			<tr>
+				<td style="background-color: rgb({{r}}, {{g}}, {{b}})">COLOR</td>
+			</tr>
+			{% endfor %}
+			{% endfor %}
+			{% endfor %}
+		</table>
+	</body>
+</html>

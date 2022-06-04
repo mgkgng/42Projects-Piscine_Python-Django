@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Ex02: First Form</title>
+	</head>
+	<style>
+		table, td, th {
+			border-collapse: collapse;
+			border-style: solid;
+			border: 1px solid;
+		}
+	</style>
+	<body>
+		<form method="POST">
+			{% csrf_token %}
+			{{form}}
+			<input type="submit" name="submit">
+		</form>
+		<h2>Input History</h2>
+		{% block history %}
+		{% include "logs.log" %}
+		{% endblock %}
+		</table>
+	</body>
+</html>
