@@ -1,14 +1,18 @@
+from re import M
 from django.shortcuts import render, HttpResponse
 import psycopg2
 from .models import Movies
+
+def index(request):
+	return HttpResponse("Hello world!")
 
 def init(request):
 	conn = psycopg2.connect(database="djangotraining", host="localhost", user="djangouser", password="secret")
 	
 	with conn.cursor() as curs:
 		try:
-			curs.execute("""CREATE TABLE ex02names(
-				title varchar(64) NOT NULL UNIQUE
+			curs.execute("""CREATE TABLE IF NOT EXISTS ex03_movies(
+				title varchar(64) NOT NULL UNIQUE,
 				episode_nb serial PRIMARY KEY,
 				opening_crawl text,
 				director varchar(32) NOT NULL,
@@ -38,7 +42,11 @@ def populate(request):
 		return HttpResponse(e)
 
 def display(request):
-	movielist = Movies.objects.all()
+	m = Movies.objects.all()
+	movielist = []
+	for movie in m:
+		print(f"{movie.title}, {movie.director}")
+		movielist.append((movie.title, movie.episode_nb, movie.opening_crawl, movie.director, movie.producer, movie.release_date))
 	if len(movielist) == 0:
 		return HttpResponse("No data available")
-	return render(request, "ex02/display.html", {"movielist": movielist})
+	return render(request, "ex03/display.html", {"movielist": movielist})
