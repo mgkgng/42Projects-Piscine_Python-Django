@@ -11,14 +11,7 @@ def init(request):
 	
 	with conn.cursor() as curs:
 		try:
-			curs.execute("""CREATE OR REPLACE FUNCTION update_changetimestamp_column()
-					RETURNS TRIGGER AS $$
-					BEGIN
-					NEW.updated = now();
-					NEW.created = OLD.created;
-					RETURN NEW;
-					END;
-					$$ language 'plpgsql';""")
+
 			curs.execute("""CREATE TABLE IF NOT EXISTS ex07_movies(
 				title varchar(64) NOT NULL UNIQUE,
 				episode_nb serial PRIMARY KEY,
@@ -26,10 +19,18 @@ def init(request):
 				director varchar(32) NOT NULL,
 				producer varchar(128) NOT NULL,
 				release_date date NOT NULL,
-				created timestamptz NOT NULL DEFAULT NOW(),
-				updated timestamptz NOT NULL DEFAULT NOW()
+				created timestamptz NOT NULL DEFAULT current_timestamp,
+				updated timestamptz NOT NULL DEFAULT current_timestamp
 			)""")
-			curs.execute("""CREATE TRIGGER update_films_changetimestamp BEFORE UPDATE
+			curs.execute("""CREATE OR REPLACE FUNCTION update_changetimestamp_column()
+				RETURNS TRIGGER AS $$
+				BEGIN
+				NEW.updated = now();
+				NEW.created = OLD.created;
+				RETURN NEW;
+				END;
+				$$ language 'plpgsql';
+				CREATE TRIGGER update_films_changetimestamp BEFORE UPDATE
 				ON ex07_movies FOR EACH ROW EXECUTE PROCEDURE
 				update_changetimestamp_column();""")
 			conn.commit()
@@ -58,7 +59,7 @@ def display(request):
 	m = Movies.objects.all()
 	movielist = []
 	for movie in m:
-		movielist.append((movie.title, movie.episode_nb, movie.opening_crawl, movie.director, movie.producer, movie.release_date))
+		movielist.append((movie.title, movie.episode_nb, movie.opening_crawl, movie.director, movie.producer, movie.release_date, movie.created, movie.updated))
 	if len(movielist) == 0:
 		return HttpResponse("No data available")
 	return render(request, "ex07/display.html", {"movielist": movielist})
@@ -70,11 +71,11 @@ def update(request):
 		if form.is_valid():
 			Movies.objects.filter(episode_nb=e_nb).update(opening_crawl=form.cleaned_data["opening_crawl"])
 			return HttpResponseRedirect("/ex07/update")
-		form = MovieForm()
-		m = Movies.objects.all()
-		movielist = []
-		for movie in m:
-			movielist.append((movie.title, movie.episode_nb, movie.opening_crawl, movie.director, movie.producer, movie.release_date))
-		if len(movielist) == 0:
-			return HttpResponse("No data available")
-		return render(request, "ex07/update.html", {"movielist": movielist, "form": form})
+	form = MovieForm()
+	m = Movies.objects.all()
+	movielist = []
+	for movie in m:
+		movielist.append((movie.title, movie.episode_nb, movie.opening_crawl, movie.director, movie.producer, movie.release_date, movie.created, movie.updated))
+	if len(movielist) == 0:
+		return HttpResponse("No data available")
+	return render(request, "ex07/update.html", {"movielist": movielist, "form": form})
