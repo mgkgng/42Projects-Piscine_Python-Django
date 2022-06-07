@@ -9,7 +9,7 @@ def init(request):
 	
 	with conn.cursor() as curs:
 		try:
-			curs.execute("""CREATE TABLE ex02names(
+			curs.execute("""CREATE TABLE IF NOT EXISTS ex00_movies(
 				title varchar(64) NOT NULL UNIQUE,
 				episode_nb serial PRIMARY KEY,
 				opening_crawl text,
