@@ -21,21 +21,35 @@ def init(request):
 		except Exception as e:
 			return HttpResponse(e)
 
+curr.execute(”””
+
+INSERT INTO basename(key1, key2, key3) VALUES
+
+(value1-1, value1-2, value1-3)
+
+(value2-1, value2-2, value2-3)
+
+“””)
+
+
 def populate(request):
-	try:
-		movielist = [{"title": "The Phantom Menace", "director": "George Lucas", "producer": "Rick McCallum", "release_date": "1999-05-19"},
-		{"title": "Attack of the Clones", "director": "George Lucas", "producer": "Rick McCallum", "release_date": "2002-05-16"},
-		{"title": "Revenge of the Sith", "director": "George Lucas", "producer": "Rick McCallum", "release_date": "2005-05-19"},
-		{"title": "A New Hope", "director": "George Lucas", "producer": "Gary Kurtz, Rick McCallum", "release_date": "1977-05-25"},
-		{"title": "The Empire Strikes Back", "director": "Irvin Kershner", "producer": "Gary Kurtz, Rick McCallum", "release_date": "1980-05-17"},
-		{"title": "Return of the Jedi", "director": "Richard Marquand", "producer": "Howard G. Kazanjian, George Lucas, Rick McCallum", "release_date": "1983-05-25"},
-		{"title": "The Force Awakens", "director": "J. J. Abrams", "producer": "Kathleen Kennedy, J. J. Abrams, Bryan Burk", "release_date": "2015-12-11"}]
-		for movieinfo in movielist:
-			m = Movies(title=movieinfo["title"], director=movieinfo["director"], producer=movieinfo["producer"], release_date=movieinfo["release_date"])
-			m.save()
-		return HttpResponse("OK")
-	except Exception as e:
-		return HttpResponse(e)
+	conn = psycopg2.connect(database="djangotraining", host="localhost", user="djangouser", password="secret")
+	with conn.cursor() as curs:
+		try:
+			curs.execute("""INSERT INTO djangotraining(title, director, producer, release_date) VALUES
+			("The Phantom Menace", "George Lucas", "Rick McCallum", "1999-05-19"),
+			("Attack of the Clones", "George Lucas", "Rick McCallum", "2002-05-16"),
+			("Revenge of the Sith", "George Lucas", "Rick McCallum", "2005-05-19"),
+			("A New Hope", "George Lucas", "Gary Kurtz, Rick McCallum", "1977-05-25"),
+			("The Empire Strikes Back", "Irvin Kershner", "Gary Kurtz, Rick McCallum", "1980-05-17"),
+			("Return of the Jedi", "Richard Marquand", "Howard G. Kazanjian, George Lucas, Rick McCallum", "1983-05-25"),
+			("The Force Awakens", "J. J. Abrams", "Kathleen Kennedy, J. J. Abrams, Bryan Burk", "2015-12-11")
+			""")
+			conn.commit()
+			conn.close()
+			return HttpResponse("OK")
+		except Exception as e:
+			return HttpResponse(e)
 
 def display(request):
 	movielist = Movies.objects.all()
