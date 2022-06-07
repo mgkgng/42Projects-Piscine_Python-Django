@@ -4,14 +4,14 @@
 		<title>D5/ex04</title>
 	</head>
 	<body>
+		<form action="" method="post">{% csrf_token %}
 		<label for="movies">Choose a film to remove:</label>
 		<select name="movies" id="movies">
 			{% for movie in movielist%}
-			<option value={{movie["title"]}}>{{movie["title"]}}</option>
+			<option value={{movie.1}}>{{movie.0}}</option>
 			{% endfor %}
 		</select>
-		<form action="" method="post">
-			<input type="submit" value="remove">
+		<input type="submit" value="Submit">
 		</form>
 	</body>
 </html>

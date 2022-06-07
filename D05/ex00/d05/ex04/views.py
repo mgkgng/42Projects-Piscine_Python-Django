@@ -65,20 +65,17 @@ def remove(request):
 	with conn.cursor() as curs:
 		try:
 			if request.method == "POST":
-				form = MovieForm(request.POST)
-				if form.is_valid():
-					curs.execute("DELETE FROM ex04_movies WHERE title LIKE " + form.cleaned_data["data"])
-				else:
-					form = MovieForm()
-				return HttpResponseRedirect("/remove") # I used HttpResponseRedirect instead of simple redirect in order to modify POST method into GET method
+				curs.execute("DELETE FROM ex04_movies WHERE episode_nb=" + request.POST["movies"])
+				conn.commit()
+				conn.close()
+				return HttpResponseRedirect("/ex04/remove") # I used HttpResponseRedirect instead of simple redirect in order to modify POST method into GET method
 			movielist = []
-			curs.execute("SELECT * FROM ex02_movies")
+			curs.execute("SELECT * FROM ex04_movies")
 			r = curs.fetchall()
 			if len(r) == 0:
 				return HttpResponse("No data available")
 			for tr in r:
 				movielist.append(tr)
-			return render(request, "ex02/remove.html", {"movielist": movielist})
+			return render(request, "ex04/remove.html", {"movielist": movielist})
 		except Exception as e:
 			return HttpResponse(e)
-	
