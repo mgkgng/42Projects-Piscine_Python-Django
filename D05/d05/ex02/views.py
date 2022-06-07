@@ -1,6 +1,5 @@
 from django.shortcuts import render, HttpResponse
 import psycopg2
-from .models import Movies
 
 def index(request):
 	return HttpResponse("Hello world!")
