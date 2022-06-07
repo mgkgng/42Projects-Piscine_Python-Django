@@ -1,4 +1,3 @@
-from re import M
 from django.shortcuts import render, HttpResponse
 import psycopg2
 from .models import Movies
@@ -45,7 +44,6 @@ def display(request):
 	m = Movies.objects.all()
 	movielist = []
 	for movie in m:
-		print(f"{movie.title}, {movie.director}")
 		movielist.append((movie.title, movie.episode_nb, movie.opening_crawl, movie.director, movie.producer, movie.release_date))
 	if len(movielist) == 0:
 		return HttpResponse("No data available")

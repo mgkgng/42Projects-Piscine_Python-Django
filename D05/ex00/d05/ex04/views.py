@@ -1,6 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 import psycopg2
-from .forms import MovieForm
 
 def index(request):
 	return HttpResponse("Hello world!")
