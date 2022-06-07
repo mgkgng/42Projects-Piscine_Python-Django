@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 import psycopg2
+from .forms import MovieForm
 
 def index(request):
 	return HttpResponse("Hello world!")
@@ -72,4 +73,27 @@ def display(request):
 			return HttpResponse(e)
 
 def update(request):
-	if request.method == "POST"
+	conn = psycopg2.connect(database="djangotraining", host="localhost", user="djangouser", password="secret")
+	with conn.cursor() as curs:
+		try:
+			if request.method == "POST":
+				e_nb = request.POST["movies"]
+				form = MovieForm(request.POST)
+				if form.is_valid():
+					curs.execute("DELETE FROM ex04_movies WHERE episode_nb=" + e_nb)
+					conn.commit()
+					conn.close()
+					return HttpResponseRedirect("/ex04/remove")
+				else:
+					form = MovieForm()
+			movielist = []
+			curs.execute("SELECT * FROM ex06_movies")
+			r = curs.fetchall()
+			if len(r) == 0:
+				return HttpResponse("No data available")
+			for tr in r:
+				movielist.append(tr)
+			return render(request, "ex06/display.html", {"movielist": movielist})
+		except Exception as e:
+			return HttpResponse(e)
+

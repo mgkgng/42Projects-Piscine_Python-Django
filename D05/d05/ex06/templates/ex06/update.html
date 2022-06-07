@@ -9,7 +9,7 @@
 			<option value={{movie.1}}>{{movie.0}}</option>
 			{% endfor %}
 		</select><br>
-		<form action="" method="post">
+		<form action="" method="post">{% csrf_token %}
 		{{form}}
 		</form><br>
 		<input type="submit", value="Submit">
