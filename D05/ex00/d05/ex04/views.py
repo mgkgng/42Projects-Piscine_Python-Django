@@ -58,5 +58,3 @@ def remove(request):
 			r.delete()
 			redirect("/remove")
 	return render(request, "ex04/remove.html", {"movielist": movielist})
-			
-	
