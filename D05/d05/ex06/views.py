@@ -1,6 +1,5 @@
 from django.shortcuts import render, HttpResponse
 import psycopg2
-from .models import Movies
 
 def index(request):
 	return HttpResponse("Hello world!")
@@ -10,15 +9,27 @@ def init(request):
 	
 	with conn.cursor() as curs:
 		try:
+			curs.execute("""CREATE OR REPLACE FUNCTION update_changetimestamp_column()
+					RETURNS TRIGGER AS $$
+					BEGIN
+					NEW.updated = now();
+					NEW.created = OLD.created;
+					RETURN NEW;
+					END;
+					$$ language 'plpgsql';""")
 			curs.execute("""CREATE TABLE IF NOT EXISTS ex06_movies(
 				title varchar(64) NOT NULL UNIQUE,
 				episode_nb serial PRIMARY KEY,
 				opening_crawl text,
 				director varchar(32) NOT NULL,
 				producer varchar(128) NOT NULL,
-				release_date date NOT NULL
-				created date timestamp
+				release_date date NOT NULL,
+				created timestamptz NOT NULL DEFAULT NOW(),
+				updated timestamptz NOT NULL DEFAULT NOW()
 			)""")
+			curs.execute("""CREATE TRIGGER update_films_changetimestamp BEFORE UPDATE
+				ON ex06_movies FOR EACH ROW EXECUTE PROCEDURE
+				update_changetimestamp_column();""")
 			conn.commit()
 			conn.close()
 			return HttpResponse("OK")
@@ -57,6 +68,8 @@ def display(request):
 			for tr in r:
 				movielist.append(tr)
 			return render(request, "ex06/display.html", {"movielist": movielist})
-
 		except Exception as e:
 			return HttpResponse(e)
+
+def update(request):
+	if request.method == "POST"
