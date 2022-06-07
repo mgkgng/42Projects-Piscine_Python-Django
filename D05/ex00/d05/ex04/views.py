@@ -1,6 +1,7 @@
-from django.shortcuts import render, HttpResponse
-import psycopg2
+import psycopg2, requests
+from django.shortcuts import render, HttpResponse, redirect
 from .models import Movies
+from .forms import MovieForm
 
 def init(request):
 	conn = psycopg2.connect(database="djangotraining", host="localhost", user="djangouser", password="secret")
@@ -44,4 +45,18 @@ def display(request):
 	movielist = Movies.objects.all()
 	if len(movielist) == 0:
 		return HttpResponse("No data available")
-	return render(request, "ex02/display.html", {"movielist": movielist})
+	return render(request, "ex04/display.html", {"movielist": movielist})
+
+def remove(request):
+	movielist = Movies.objects.all()
+	if len(movielist) == 0:
+		return HttpResponse("No data available")
+	if request.method == "POST":
+		form = MovieForm(request.POST)
+		if form.is_valid():
+			r = Movies.objects.filter(title=form.title)
+			r.delete()
+			redirect("/remove")
+	return render(request, "ex04/remove.html", {"movielist": movielist})
+			
+	

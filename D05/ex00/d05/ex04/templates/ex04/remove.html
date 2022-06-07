@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+	<head>
+		<title>D5/ex04</title>
+	</head>
+	<body>
+		<label for="movies">Choose a film to remove:</label>
+		<select name="movies" id="movies">
+			{% for movie in movielist%}
+			<option value={{movie["title"]}}>{{movie["title"]}}</option>
+			{% endfor %}
+		</select>
+		<form action="" method="post">
+			<input type="submit" value="remove">
+		</form>
+	</body>
+</html>
