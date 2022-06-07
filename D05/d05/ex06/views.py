@@ -80,12 +80,13 @@ def update(request):
 				e_nb = request.POST["movies"]
 				form = MovieForm(request.POST)
 				if form.is_valid():
-					curs.execute("DELETE FROM ex04_movies WHERE episode_nb=" + e_nb)
+					curs.execute("UPDATE ex06_movies SET opening_crawl='"
+							+ form.cleaned_data["opening_crawl"]
+							+ "' WHERE episode_nb=" + e_nb)
 					conn.commit()
 					conn.close()
-					return HttpResponseRedirect("/ex04/remove")
-				else:
-					form = MovieForm()
+					return HttpResponseRedirect("/ex06/update")
+			form = MovieForm()
 			movielist = []
 			curs.execute("SELECT * FROM ex06_movies")
 			r = curs.fetchall()
@@ -93,7 +94,7 @@ def update(request):
 				return HttpResponse("No data available")
 			for tr in r:
 				movielist.append(tr)
-			return render(request, "ex06/display.html", {"movielist": movielist})
+			return render(request, "ex06/update.html", {"movielist": movielist, "form": form})
 		except Exception as e:
 			return HttpResponse(e)
 
