@@ -40,19 +40,19 @@ def init(request):
 def populate(request):
 	with open("ex08/people.csv") as f_people:
 		lines = f_people.readlines()
-		people_info = [line.split(' ') for line in lines]
+		people_info = [line.split('\t') for line in lines]
 	with open("ex08/planet.csv") as f_planet:
 		lines = f_planet.readlines()
 		planet_info = [line.split(' ') for line in lines]
 	conn = psycopg2.connect(database="djangotraining", host="localhost", user="djangouser", password="secret")
 	with conn.cursor() as curs:
 		try:
+			for elem in planet_info:
+				curs.execute("INSERT INTO ex08_planet(name, climate, diameter, orbital_period, population, rotation_period, surface_water, terrain) VALUES"
+				+ "('" + elem[0] + "', '" + elem[1] + "', '" + elem[2] + "', '" + elem[3] + "', '" + elem[4] + "', '" + elem[5] + "', '" + elem[6] + "', '" + elem[7] + "')")
 			for elem in people_info:
-			curs.execute("""INSERT INTO ex08_planet(name, climate, diameter, orbital_period, population, rotation_period, surface_water, terrain) 
-			VALUES
-			('The Phantom Menace', 'George Lucas', 'Rick McCallum', '1999-05-19'),
-			""")
-			peopl
+				curs.execute("INSERT INTO ex08_people(name, birth_year, gender, eye_color, hair_color, height, mass, homeworld) VALUES"
+				+ "('" + elem[0] + "', '" + elem[1] + "', '" + elem[2] + "', '" + elem[3] + "', '" + elem[4] + "', '" + elem[5] + "', '" + elem[6] + "', '" + elem[7] + "')")
 			conn.commit()
 			conn.close()
 			return HttpResponse("OK")
