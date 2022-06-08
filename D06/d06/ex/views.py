@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect
 import requests
-from .forms import LoginForm
+from .forms import RegisterForm, LoginForm
 from django.contrib import auth
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -19,15 +19,18 @@ def register(request):
 	if request.user.is_authenticated():
 		return redirect("/home")
 	if request.method == "POST":
-		form = LoginForm(request.POST)
+		form = RegisterForm(request.POST)
 		if form.is_valid():
 			username = form.cleaned_data["username"]
 			password = form.cleaned_data["password"]
 			password_confirm = form.cleaned_data["password_confirm"]
 			if password != password_confirm:
-				return HttpResponseRedirect("Password confirmation not corresponding to the password")
-			u = User.objects.create_user
-	form = LoginForm()
+				return redirect("/register", {"msg": "Password confirmation not corresponding to the password"})
+			u = User.objects.create_user(username, password)
+			u.save()
+			auth.login(request, u)
+			return redirect("/home")
+	form = RegisterForm()
 	return render(request, "main/register.html", {"form": form})
 
 def login(request):
