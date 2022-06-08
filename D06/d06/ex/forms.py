@@ -1,20 +1,20 @@
 from django import forms
-from .models import Tip
+from .models import Tip, Register
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
-class RegisterForm(forms.ModelForm):
+class RegisterForm(forms.Form):
 	username = forms.CharField(required=True)
 	password = forms.CharField(required=True, widget=forms.PasswordInput())
 	password_confirm = forms.CharField(required=True, widget=forms.PasswordInput())
 
 	class Meta:
-		model=User
+		model=Register
 		fields=("username", "password")
 	
-	def clean_password(self):
-		return make_password(self.cleaned_data["password"])
+	#def clean_password(self):
+	#	return make_password(self.cleaned_data["password"])
 
 	def clean_password_confirm(self):
 		p = self.data["password"]
@@ -32,7 +32,7 @@ class RegisterForm(forms.ModelForm):
 class LoginForm(forms.Form):
 	username = forms.CharField(required=True)
 	password = forms.CharField(required=True, widget=forms.PasswordInput())
-
+	
 class TipFrom(forms.ModelForm):
 
 	class Meta:

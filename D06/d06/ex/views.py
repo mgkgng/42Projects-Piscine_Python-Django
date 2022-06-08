@@ -4,6 +4,8 @@ from .forms import RegisterForm, LoginForm
 from django.contrib import auth
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+
 
 def home(request):
 	namelist = settings.NAMELIST
@@ -22,10 +24,11 @@ def register(request):
 	if request.method == "POST":
 		form = RegisterForm(request.POST)
 		if form.is_valid():
-			u = User.objects.create_user(form.cleaned_data["username"], form.cleaned_data["password"])
+			uname = form.cleaned_data["username"]
+			password = form.cleaned_data["password"]
+			u = User.objects.create_user(uname, None, password)
 			u.save()
 			auth.login(request, u)
-			print("boubou")
 			return redirect("/ex/home")
 		else:
 			context["form"]	= form
@@ -40,12 +43,16 @@ def login(request):
 	if request.method == "POST":
 		form = LoginForm(request.POST)
 		if form.is_valid():
-			user = auth.authenticate(request, username=form.cleaned_data["username"], password=form.cleaned_data["password"])
-			if user is not None:
-				auth.login(request, user)
+			username = form.cleaned_data["username"]
+			password = form.cleaned_data["password"]
+			u = auth.authenticate(username=username, password=password)
+			if u and u.is_active:
+				auth.login(request, u)
 				return redirect('/ex/home')
 			else:
-				context["form"] = form
+				context["msg"] = "Wrong username or password."
+				context["form"] = LoginForm()
+				return render(request, 'main/login.html', context)
 		else:
 			context["form"] = form
 	else:
