@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+	<head>
+		<title>D06-HOMEPAGE</title>
+	</head>
+	<body>
+		<form method="post">
+			<select name="" id="">
+				{% for name in namelist %}
+				<option value={{name}}>{{name}}</option>
+				{% endfor %}
+			</select>
+			<input type="submit" value="Get this username">
+		</form>
+		<a href="/getUsername">Get a username</a>
+	</body>
+</html>
