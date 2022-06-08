@@ -4,10 +4,9 @@
 		<title>D06 Register</title>
 	</head>
 	<body>
-		<form method="post">
+		<form method="post">{% csrf_token %}
 			{{form.as_p}}
 			<input type="submit" value="Register">
 		</form>
-		{{msg}}
 	</body>
 </html>

@@ -16,41 +16,42 @@ def home(request):
 	return render(request, "main/home.html", {"namelist": namelist})
 
 def register(request):
-	if request.user.is_authenticated():
-		return redirect("/home")
+	context = {}
+	if request.user.is_authenticated:
+		return redirect("/ex/home")
 	if request.method == "POST":
 		form = RegisterForm(request.POST)
 		if form.is_valid():
-			username = form.cleaned_data["username"]
-			password = form.cleaned_data["password"]
-			password_confirm = form.cleaned_data["password_confirm"]
-			if password != password_confirm:
-				return redirect("/register", {"msg": "Password confirmation not corresponding to the password"})
-			u = User.objects.create_user(username, password)
+			u = User.objects.create_user(form.cleaned_data["username"], form.cleaned_data["password"])
 			u.save()
 			auth.login(request, u)
-			return redirect("/home")
-	form = RegisterForm()
-	return render(request, "main/register.html", {"form": form})
+			print("boubou")
+			return redirect("/ex/home")
+		else:
+			context["form"]	= form
+	else:
+		context["form"] = RegisterForm()
+	return render(request, "main/register.html", context)
 
 def login(request):
-	if request.user.is_authenticated():
-		return redirect("/home")
+	context = {}
+	if request.user.is_authenticated:
+		return redirect("/ex/home")
 	if request.method == "POST":
 		form = LoginForm(request.POST)
 		if form.is_valid():
-			username = form.cleaned_data["username"]
-			password = form.cleaned_data["password"]
-			user = auth.authenticate(username=username, password=password)
-			if user and user.is_active:
+			user = auth.authenticate(request, username=form.cleaned_data["username"], password=form.cleaned_data["password"])
+			if user is not None:
 				auth.login(request, user)
-				return redirect('/home')
+				return redirect('/ex/home')
 			else:
-				form._error["username"] = ["This user does not exist."]
+				context["form"] = form
+		else:
+			context["form"] = form
 	else:
-		form = LoginForm()
-	return render(request, 'main/home.html', {"form", form})
+		context["form"] = LoginForm()
+	return render(request, 'main/login.html', context)
 
 def logout(request):
 	auth.logout(request)
-	return redirect('/home')
+	return redirect('/ex/home')
