@@ -22,20 +22,21 @@ class RegisterForm(forms.Form):
 		if p != p_confirm:
 			raise ValidationError("Password confirmation not corresponding to the password")
 		return p
-	#def clean(self):
-	#	super(RegisterForm, self).clean()
-		#username = self.cleaned_data['username']
-		#if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
-			#raise forms.ValidationError(f'Username "{username}" is already in use.')
-		#return username
+	
+	def clean(self):
+		super(RegisterForm, self).clean()
+		username = self.cleaned_data['username']
+		if User.objects.filter(username=username).exists():
+			raise forms.ValidationError(f'Username "{username}" is already in use.')
+		return username
 
 class LoginForm(forms.Form):
 	username = forms.CharField(required=True)
 	password = forms.CharField(required=True, widget=forms.PasswordInput())
 	
-class TipFrom(forms.ModelForm):
+class TipForm(forms.ModelForm):
 	content = forms.CharField(required=True)
 
 	class Meta:
 		model = Tip
-		fields = ("content", "author", "date")
+		fields = ("content", "author")

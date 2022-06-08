@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Register(models.Model):
 	username = models.CharField(max_length=32)
@@ -8,4 +9,4 @@ class Register(models.Model):
 class Tip(models.Model):
 	content = models.TextField()
 	author = models.CharField(max_length=128)
-	date = models.DateField()
+	date = models.DateField(auto_now_add=True)

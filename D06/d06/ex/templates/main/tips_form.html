@@ -1,3 +1,5 @@
-<form method="post">{% crsf_token %}
-	{{tipform}}
+<form method="POST">{% csrf_token %}
+	Share your life pro tip! :
+	{{tipform.content}}
+	<input type="submit" value="Share">
 </form>
