@@ -23,8 +23,7 @@ def home(request):
 
 	if request.user.is_authenticated:
 		context["tipform"] = TipForm()
-		d = Tip.objects.all()
-		context["glace"] = d
+		context["glace"] = Tip.objects.all()
 		return render(request, "main/home.html", context)
 	elif "username" in request.COOKIES.keys():
 		return render(request, "main/home.html")
@@ -42,7 +41,9 @@ def register(request):
 	if request.method == "POST":
 		form = RegisterForm(request.POST)
 		if form.is_valid():
-			u = User.objects.create_user(form.cleaned_data["username"], None, form.cleaned_data["password"])
+			username = form.cleaned_data['username']
+			password = form.cleaned_data['password']
+			u = User.objects.create_user(username, None, password)
 			u.save()
 			auth.login(request, u)
 			return redirect("/ex/home")

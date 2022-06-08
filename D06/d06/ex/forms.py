@@ -23,8 +23,7 @@ class RegisterForm(forms.Form):
 			raise ValidationError("Password confirmation not corresponding to the password")
 		return p
 	
-	def clean(self):
-		super(RegisterForm, self).clean()
+	def clean_username(self):
 		username = self.cleaned_data['username']
 		if User.objects.filter(username=username).exists():
 			raise forms.ValidationError(f'Username "{username}" is already in use.')
