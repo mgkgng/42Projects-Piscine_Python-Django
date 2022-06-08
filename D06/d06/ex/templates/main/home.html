@@ -4,18 +4,7 @@
 		<title>D06-HOMEPAGE</title>
 	</head>
 	<body>
-		{% if request.COOKIES.username %}
 		<h1><nav>Hello {{request.COOKIES.username}}!</nav></h1>
-		{% else %}
-		<h1><nav>Hello user!</nav></h1>
-		{% endif %}
-		<form method="post">{% csrf_token %}
-			<select name="username" id="username">
-				{% for name in namelist %}
-				<option value={{name}}>{{name}}</option>
-				{% endfor %}
-			</select>
-			<input type="submit" value="Get this username">
 		</form>
 		<a href="/ex/register">Register</a><br>
 		<a href="/ex/login">Login</a><br>

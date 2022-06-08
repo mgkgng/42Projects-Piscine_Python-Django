@@ -34,6 +34,7 @@ class LoginForm(forms.Form):
 	password = forms.CharField(required=True, widget=forms.PasswordInput())
 	
 class TipFrom(forms.ModelForm):
+	content = forms.CharField(required=True)
 
 	class Meta:
 		model = Tip

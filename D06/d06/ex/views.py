@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-import requests
+import random
 from .forms import RegisterForm, LoginForm
 from django.contrib import auth
 from django.conf import settings
@@ -8,14 +8,14 @@ from django.contrib.auth.hashers import make_password
 
 
 def home(request):
-	namelist = settings.NAMELIST
-	if request.method == "POST":
-		cookie = request.POST.get("username", None)
-		request.COOKIES["username"] = cookie
-		response = render(request, "main/home.html", {"namelist": namelist})
-		response.set_cookie("username", cookie, max_age=settings.SESSION_COOKIE_AGE)
-		return response
-	return render(request, "main/home.html", {"namelist": namelist})
+	if "username" in request.COOKIES.keys():
+		return render(request, "main/home.html")
+	cookie = random.choice(settings.NAMELIST) 
+	request.COOKIES["username"] = cookie
+	response = render(request, "main/home.html")
+	response.set_cookie("username", cookie, max_age=settings.SESSION_COOKIE_AGE)
+	return response
+	
 
 def register(request):
 	context = {}
