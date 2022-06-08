@@ -1,4 +1,5 @@
 from django import forms
+from .models import Tip
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
@@ -31,3 +32,9 @@ class RegisterForm(forms.ModelForm):
 class LoginForm(forms.Form):
 	username = forms.CharField(required=True)
 	password = forms.CharField(required=True, widget=forms.PasswordInput())
+
+class TipFrom(forms.ModelForm):
+
+	class Meta:
+		model = Tip
+		fields = ("content", "author", "date")

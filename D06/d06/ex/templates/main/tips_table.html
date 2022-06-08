@@ -1,0 +1,14 @@
+<table>
+	<tr>
+		<th>Content</th>
+		<th>Author</th>
+		<th>Date</th>
+	</tr>
+	{% for elem in tiplist %}
+	<tr>
+		<td>{{elem.content}}</td>
+		<td>{{elem.author}}</td>
+		<td>{{elem.date}}</td>
+	</tr>
+	{% endfor %}
+</table>
