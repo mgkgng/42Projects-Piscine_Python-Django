@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Login</title>
+	</head>
+	<body>
+		<form action={% url 'login' %} method="POST">{%crsf_token%}
+			{{form.as_p}}
+			<input type="submit" value="Login">
+		</form>
+	</body>
+</html>
