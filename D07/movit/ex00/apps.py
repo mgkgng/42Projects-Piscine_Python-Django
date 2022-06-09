@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MovitAppConfig(AppConfig):
+class Ex00Config(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'movit_app'
+    name = 'ex00'
