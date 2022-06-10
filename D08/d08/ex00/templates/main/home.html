@@ -1,7 +1,16 @@
+{% load static %}
 <!doctype>
 <html>
 	<head>
 		<title>D08</title>
+		<style>
+			body {
+				background-image: url('{% static 'main/img/rothko.jpeg' %}');
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-size: 100% 100%;			  
+			}
+		</style>
 	</head>
 	<body>
 		<h2>Please upload your file here: </h2>
@@ -10,12 +19,9 @@
 			<input type="submit" value="Submit">
 		</form>
 		<h2>Here you see uploaded files: </h2>
-		{% for file in files %}
-		<li>
-			<a href=”{{ file.file.url }}”>
-			{{file.name}}
-			</a>
-			</li>	
-			{% endfor %}
+		{% for f in files %}
+		<p>imagefile={{f.name}}</p>
+		<img src="{{f.imagefile.url}}" alt="{{f.name}}">
+		{% endfor %}
 	</body>
 </html>
