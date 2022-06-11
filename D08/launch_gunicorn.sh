@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-gunicorn -c conf/gunicorn_config.py d08.wsgi
+gunicorn -c conf/gunicorn_config.py d08.wsgi --daemon
